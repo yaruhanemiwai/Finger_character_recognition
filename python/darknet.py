@@ -9,7 +9,6 @@ import glob
 import os
 import gc
 import sys
-args = sys.argv
 
 def sample(probs):
     s = sum(probs)
@@ -144,7 +143,7 @@ def classify(net, meta, im):
     return res
 
 def detect(net, meta, im, thresh=.1, hier_thresh=.5, nms=.45):
-    #im = load_image(image, 0, 0)
+    #im = load_image(im, 0, 0)
     num = c_int(0)
     pnum = pointer(num)
     predict_image(net, im)
@@ -173,3 +172,19 @@ def frame_diff(img1,img2,thr):
     mask = cv2.medianBlur(diff,3)
 
     return mask
+
+def get_colors(list_class):
+
+    class_colors = []
+
+    for i in range(len(list_class)):
+        hue = 255*i / len(list_class)
+        col = np.zeros((1,1,3)).astype(np.uint8)
+        col[0][0][0] = hue
+        col[0][0][1] = 128
+        col[0][0][2] = 255
+        cvcolor = cv2.cvtColor(col,cv2.COLOR_HSV2BGR)
+        col = (int(cvcolor[0][0][0]),int(cvcolor[0][0][1]),int(cvcolor[0][0][2]))
+        class_colors.append(col)
+
+    return class_colors

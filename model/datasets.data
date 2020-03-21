@@ -1,5 +1,5 @@
 classes= 43
-train  = train
-valid  = val
+train  = ../model/dummy/train
+valid  = ../model/dummy/val
 names = ../model/obj.names
 backup = backup
